@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify OTP — JobHub</title>
+  <meta name="description" content="Enter the 6-digit verification code sent to your email to complete login.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── OTP-specific styles ───────────────────────────────────────── */
+    .otp-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin: 24px 0 8px;
+    }
+
+    .otp-boxes {
+      display: flex;
+      gap: 10px;
+    }
+
+    .otp-box {
+      width: 52px;
+      height: 62px;
+      border: 2px solid rgba(108, 71, 255, 0.25);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-align: center;
+      caret-color: #6c47ff;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      outline: none;
+    }
+
+    .otp-box:focus {
+      border-color: #6c47ff;
+      box-shadow: 0 0 0 3px rgba(108,71,255,0.22);
+      transform: translateY(-2px);
+    }
+
+    .otp-box.filled {
+      border-color: #6c47ff;
+      background: rgba(108,71,255,0.1);
+    }
+
+    .otp-box.error-box {
+      border-color: #ff5b5b;
+      box-shadow: 0 0 0 3px rgba(255,91,91,0.18);
+      animation: shake 0.4s ease;
+    }
+
+    .otp-box.success-box {
+      border-color: #00d4aa;
+      box-shadow: 0 0 0 3px rgba(0,212,170,0.18);
+    }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-5px); }
+      40%      { transform: translateX(5px); }
+      60%      { transform: translateX(-4px); }
+      80%      { transform: translateX(4px); }
+    }
+
+    /* ── Timer ─────────────────────────────────────────────────────── */
+    .otp-timer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: #a09ec0;
+      margin-top: 4px;
+    }
+
+    .otp-timer .timer-value {
+      font-weight: 700;
+      color: #6c47ff;
+      min-width: 38px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .otp-timer.expiring .timer-value {
+      color: #ff5b5b;
+      animation: pulse-red 1s ease infinite;
+    }
+
+    @keyframes pulse-red {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.5; }
+    }
+
+    /* ── Attempts badge ─────────────────────────────────────────────── */
+    .attempts-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: rgba(255,91,91,0.12);
+      color: #ff5b5b;
+      margin-bottom: 4px;
+    }
+
+    /* ── Shield icon area ───────────────────────────────────────────── */
+    .otp-shield {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(108,71,255,0.25), rgba(79,47,224,0.15));
+      margin: 0 auto 20px;
+      box-shadow: 0 8px 32px rgba(108,71,255,0.2);
+      animation: float-shield 3.5s ease-in-out infinite;
+    }
+
+    @keyframes float-shield {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
+    }
+
+    /* ── Masked email ───────────────────────────────────────────────── */
+    .masked-email {
+      color: #6c47ff;
+      font-weight: 600;
+    }
+
+    /* ── Resend link ────────────────────────────────────────────────── */
+    .resend-row {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.87rem;
+      color: #a09ec0;
+    }
+
+    .resend-btn {
+      background: none;
+      border: none;
+      color: #6c47ff;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.87rem;
+      padding: 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .resend-btn:disabled {
+      color: #a09ec0;
+      text-decoration: none;
+      cursor: default;
+    }
+
+    /* ── Dev OTP banner ─────────────────────────────────────────────── */
+    .dev-banner {
+      background: rgba(255, 200, 0, 0.12);
+      border: 1px solid rgba(255, 200, 0, 0.35);
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin: 12px 0;
+      font-size: 0.82rem;
+      color: #ffd700;
+      text-align: center;
+      display: none;
+    }
+
+    .dev-banner.show {
+      display: block;
+    }
+
+    .dev-otp-code {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 6px;
+      display: block;
+      margin-top: 4px;
+      font-family: 'Sora', monospace;
+    }
+
+    /* ── Back to login link ─────────────────────────────────────────── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #a09ec0;
+      font-size: 0.84rem;
+      text-decoration: none;
+      margin-top: 6px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #6c47ff; }
+  </style>
+</head>
+<body>
+
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Top-left logo -->
+<a href="index.html" class="auth-home-logo">
+  <svg width="26" height="26" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="url(#alGrad)"/><rect x="8" y="10" width="12" height="9" rx="2" stroke="white" stroke-width="1.6" fill="none"/><path d="M11 10V8.5A2.5 2.5 0 0114 6v0a2.5 2.5 0 012.5 2.5V10" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="14.5" r="1.2" fill="white"/><defs><linearGradient id="alGrad" x1="0" y1="0" x2="28" y2="28"><stop offset="0%" stop-color="#7c5cff"/><stop offset="100%" stop-color="#4f2fe0"/></linearGradient></defs></svg>
+  Job<span>Hub</span>
+</a>
+
+<div class="auth-page">
+  <!-- LEFT PANEL -->
+  <div class="auth-left">
+    <div class="auth-illustration">
+      <svg viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="130" cy="130" r="110" fill="rgba(108,71,255,0.15)"/>
+        <circle cx="130" cy="130" r="80" fill="rgba(108,71,255,0.12)"/>
+        <!-- Shield icon in SVG illustration -->
+        <rect x="90" y="80" width="80" height="90" rx="12" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+        <path d="M130 95 L155 108 L155 135 C155 150 130 162 130 162 C130 162 105 150 105 135 L105 108 Z"
+              fill="rgba(108,71,255,0.5)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+        <path d="M120 130l7 7 13-14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="200" cy="90" r="8" fill="#00d4aa" opacity="0.8"/>
+        <circle cx="60" cy="160" r="6" fill="#6c47ff" opacity="0.7"/>
+        <circle cx="195" cy="185" r="5" fill="#00d4aa" opacity="0.5"/>
+        <!-- Dots representing OTP digits -->
+        <circle cx="110" cy="185" r="5" fill="rgba(108,71,255,0.8)"/>
+        <circle cx="122" cy="185" r="5" fill="rgba(108,71,255,0.8)"/>
+        <circle cx="134" cy="185" r="5" fill="rgba(108,71,255,0.6)"/>
+        <circle cx="146" cy="185" r="3" fill="rgba(108,71,255,0.3)"/>
+        <circle cx="156" cy="185" r="3" fill="rgba(108,71,255,0.3)"/>
+      </svg>
+    </div>
+    <h2>Secure Verification</h2>
+    <p>We sent a 6-digit code to your email to confirm it's really you.</p>
+    <div class="auth-perks">
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span>Code expires in 5 minutes</span>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span>Maximum 3 verification attempts</span>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span>Your account stays protected</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="auth-right">
+    <div class="auth-card">
+
+      <!-- Shield icon -->
+      <div class="otp-shield">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#6c47ff" stroke-width="1.8">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10" stroke="#6c47ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h2>Check Your Email</h2>
+      <p class="auth-sub">
+        We sent a 6-digit code to
+        <span class="masked-email" id="maskedEmail">your email</span>
+      </p>
+
+      <!-- Dev-mode banner (hidden in production) -->
+      <div class="dev-banner" id="devBanner">
+        ⚠️ Dev mode — email not configured
+        <span class="dev-otp-code" id="devOtpCode"></span>
+      </div>
+
+      <!-- Attempts warning -->
+      <div id="attemptsWarning" style="display:none" class="attempts-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="attemptsText"></span>
+      </div>
+
+      <!-- OTP digit boxes -->
+      <form id="otpForm" novalidate>
+        <div class="otp-wrapper">
+          <div class="otp-boxes" id="otpBoxes">
+            <input class="otp-box" id="otp0" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code">
+            <input class="otp-box" id="otp1" type="text" inputmode="numeric" maxlength="1">
+            <input class="otp-box" id="otp2" type="text" inputmode="numeric" maxlength="1">
+            <input class="otp-box" id="otp3" type="text" inputmode="numeric" maxlength="1">
+            <input class="otp-box" id="otp4" type="text" inputmode="numeric" maxlength="1">
+            <input class="otp-box" id="otp5" type="text" inputmode="numeric" maxlength="1">
+          </div>
+
+          <!-- Countdown timer -->
+          <div class="otp-timer" id="otpTimer">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Code expires in <span class="timer-value" id="timerValue">5:00</span>
+          </div>
+        </div>
+
+        <div class="form-error" id="otpError"></div>
+
+        <button type="submit" class="auth-submit" id="verifyBtn">Verify & Sign In</button>
+      </form>
+
+      <!-- Resend OTP -->
+      <div class="resend-row">
+        Didn't receive it?
+        <button class="resend-btn" id="resendBtn" disabled>
+          Resend OTP (<span id="resendCountdown">30</span>s)
+        </button>
+      </div>
+
+      <!-- Back to login -->
+      <div style="text-align:center; margin-top:18px;">
+        <a href="login.html" class="back-link" id="backToLogin">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Login
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+/**
+ * verify-otp.js (inline)
+ * ──────────────────────────────────────────────────
+ * Handles the OTP verification step after successful
+ * email+password login.
+ *
+ * Data flow:
+ *   login.html → stores userId + email in sessionStorage
+ *   → verify-otp.html reads them here
+ *   → calls POST /api/login/verify-otp
+ *   → on success, stores JWT + redirects to dashboard
+ */
+
+// ── Toast helper ──────────────────────────────────────────────────────
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icons = { success: '✓', error: '✗', info: 'ℹ' };
+  toast.innerHTML = `<span style="font-weight:700;margin-right:6px">${icons[type] || 'ℹ'}</span>${message}`;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 4500);
+}
+
+// ── Read state passed from login page ────────────────────────────────
+const userId  = sessionStorage.getItem('otp_user_id');
+const email   = sessionStorage.getItem('otp_email');
+const devOtp  = sessionStorage.getItem('otp_dev_code');   // dev only
+
+// Guard: if someone lands here directly without logging in, send back
+if (!userId) {
+  showToast('Please login first.', 'error');
+  setTimeout(() => window.location.href = 'login.html', 1500);
+}
+
+// Show masked email (e.g.  r***l@example.com)
+function maskEmail(email) {
+  if (!email) return 'your email';
+  const [user, domain] = email.split('@');
+  if (!domain) return email;
+  const masked = user.length <= 2
+    ? user[0] + '***'
+    : user[0] + '***' + user[user.length - 1];
+  return `${masked}@${domain}`;
+}
+document.getElementById('maskedEmail').textContent = maskEmail(email);
+
+// Show dev OTP if email was not configured
+if (devOtp) {
+  const banner = document.getElementById('devBanner');
+  document.getElementById('devOtpCode').textContent = devOtp;
+  banner.classList.add('show');
+}
+
+// ── OTP box keyboard navigation ───────────────────────────────────────
+const boxes = Array.from(document.querySelectorAll('.otp-box'));
+
+boxes.forEach((box, index) => {
+  box.addEventListener('input', (e) => {
+    // Only allow digits
+    const val = e.target.value.replace(/\D/g, '');
+    e.target.value = val ? val[val.length - 1] : '';  // Keep only last digit
+
+    box.classList.toggle('filled', !!e.target.value);
+
+    // Auto-advance to next box
+    if (val && index < boxes.length - 1) {
+      boxes[index + 1].focus();
+    }
+
+    // Auto-submit when all boxes are filled
+    if (boxes.every(b => b.value)) {
+      setTimeout(() => document.getElementById('otpForm').requestSubmit(), 100);
+    }
+  });
+
+  box.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace') {
+      if (!box.value && index > 0) {
+        boxes[index - 1].value = '';
+        boxes[index - 1].classList.remove('filled');
+        boxes[index - 1].focus();
+      }
+    }
+    if (e.key === 'ArrowLeft' && index > 0) boxes[index - 1].focus();
+    if (e.key === 'ArrowRight' && index < boxes.length - 1) boxes[index + 1].focus();
+  });
+
+  // Handle paste (e.g. pasting "483920")
+  box.addEventListener('paste', (e) => {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData('text');
+    const digits = text.replace(/\D/g, '').slice(0, 6);
+    digits.split('').forEach((digit, i) => {
+      if (boxes[i]) {
+        boxes[i].value = digit;
+        boxes[i].classList.add('filled');
+      }
+    });
+    if (digits.length === 6) {
+      setTimeout(() => document.getElementById('otpForm').requestSubmit(), 100);
+    } else if (boxes[digits.length]) {
+      boxes[digits.length].focus();
+    }
+  });
+});
+
+// Focus first box on load
+boxes[0]?.focus();
+
+// ── Countdown timer (5 minutes = 300 seconds) ─────────────────────────
+let timeLeft    = 300;  // seconds
+let timerHandle = null;
+const timerEl   = document.getElementById('timerValue');
+const timerRow  = document.getElementById('otpTimer');
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function startTimer() {
+  clearInterval(timerHandle);
+  timeLeft = 300;
+  timerEl.textContent = formatTime(timeLeft);
+  timerRow.classList.remove('expiring');
+
+  timerHandle = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = formatTime(timeLeft);
+
+    if (timeLeft <= 60) timerRow.classList.add('expiring');
+
+    if (timeLeft <= 0) {
+      clearInterval(timerHandle);
+      timerEl.textContent = 'Expired';
+      showToast('OTP has expired. Please request a new one.', 'error');
+      boxes.forEach(b => { b.disabled = true; b.classList.add('error-box'); });
+      document.getElementById('verifyBtn').disabled = true;
+    }
+  }, 1000);
+}
+
+startTimer();
+
+// ── Resend countdown (30 second cooldown) ─────────────────────────────
+let resendLeft       = 30;
+let resendHandle     = null;
+const resendBtn      = document.getElementById('resendBtn');
+const resendCountEl  = document.getElementById('resendCountdown');
+
+function startResendCooldown(seconds = 30) {
+  resendLeft = seconds;
+  resendBtn.disabled = true;
+  resendCountEl.textContent = resendLeft;
+
+  resendHandle = setInterval(() => {
+    resendLeft--;
+    resendCountEl.textContent = resendLeft;
+
+    if (resendLeft <= 0) {
+      clearInterval(resendHandle);
+      resendBtn.disabled   = false;
+      resendBtn.textContent = 'Resend OTP';
+    }
+  }, 1000);
+}
+
+startResendCooldown(30);
+
+resendBtn.addEventListener('click', async () => {
+  resendBtn.disabled = true;
+  resendBtn.textContent = 'Sending…';
+
+  try {
+    // Call the resend endpoint with the email
+    const BASE = window.API_BASE || '';
+    const res  = await fetch(`${BASE}/api/2fa/resend-otp`, {
+      method:  'POST',
+      headers: {'Content-Type': 'application/json'},
+      body:    JSON.stringify({ email })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      showToast('New OTP sent to your email!', 'success');
+
+      // Reset timer
+      startTimer();
+
+      // Re-enable boxes
+      boxes.forEach(b => {
+        b.disabled = false;
+        b.value    = '';
+        b.classList.remove('filled', 'error-box');
+      });
+      boxes[0].focus();
+
+      // Show new dev OTP if returned
+      if (data.otp || data.dev_otp) {
+        const code = data.otp || data.dev_otp;
+        document.getElementById('devOtpCode').textContent = code;
+        document.getElementById('devBanner').classList.add('show');
+        sessionStorage.setItem('otp_dev_code', code);
+      }
+
+      // Hide attempts warning
+      document.getElementById('attemptsWarning').style.display = 'none';
+    } else {
+      showToast(data.error || 'Failed to resend OTP', 'error');
+    }
+  } catch (err) {
+    showToast('Network error. Is the server running?', 'error');
+  } finally {
+    // Start cooldown regardless
+    resendBtn.innerHTML = 'Resend OTP (<span id="resendCountdown">30</span>s)';
+    startResendCooldown(30);
+  }
+});
+
+// ── OTP submit ────────────────────────────────────────────────────────
+const otpForm   = document.getElementById('otpForm');
+const verifyBtn = document.getElementById('verifyBtn');
+const otpError  = document.getElementById('otpError');
+
+function setOtpError(message) {
+  otpError.textContent = message;
+  otpError.classList.add('show');
+  boxes.forEach(b => b.classList.add('error-box'));
+}
+
+function clearOtpError() {
+  otpError.textContent = '';
+  otpError.classList.remove('show');
+  boxes.forEach(b => b.classList.remove('error-box'));
+}
+
+otpForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearOtpError();
+
+  const otp = boxes.map(b => b.value).join('');
+
+  if (otp.length < 6) {
+    setOtpError('Please enter all 6 digits of the OTP.');
+    boxes[otp.length]?.focus();
+    return;
+  }
+
+  // Loading state
+  verifyBtn.dataset.originalText = verifyBtn.innerHTML;
+  verifyBtn.innerHTML = '<div class="spinner"></div> Verifying…';
+  verifyBtn.disabled  = true;
+  boxes.forEach(b => b.disabled = true);
+
+  try {
+    const BASE = window.API_BASE || '';
+    const res  = await fetch(`${BASE}/api/login/verify-otp`, {
+      method:  'POST',
+      headers: {'Content-Type': 'application/json'},
+      body:    JSON.stringify({ user_id: parseInt(userId), otp })
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.token) {
+      // ── SUCCESS ───────────────────────────────────────────────────
+      boxes.forEach(b => b.classList.add('success-box'));
+      clearInterval(timerHandle);
+
+      // Store JWT using the same Auth helper api.js provides
+      if (typeof Auth !== 'undefined') {
+        Auth.setSession(data.token, data.user);
+      } else {
+        localStorage.setItem('jwt_token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+      // Clear OTP session data
+      sessionStorage.removeItem('otp_user_id');
+      sessionStorage.removeItem('otp_email');
+      sessionStorage.removeItem('otp_dev_code');
+
+      showToast(`Welcome back, ${data.user?.name || 'User'}! 🎉`, 'success');
+      setTimeout(() => window.location.href = 'dashboard.html', 1000);
+
+    } else {
+      // ── FAILURE ───────────────────────────────────────────────────
+      const errorMsg = data.error || 'Verification failed. Please try again.';
+      setOtpError(errorMsg);
+      showToast(errorMsg, 'error');
+
+      // Extract remaining attempts from message if present
+      const match = errorMsg.match(/(\d+) attempt/);
+      const remaining = match ? parseInt(match[1]) : null;
+
+      if (remaining !== null) {
+        const warn = document.getElementById('attemptsWarning');
+        document.getElementById('attemptsText').textContent =
+          `${remaining} attempt${remaining === 1 ? '' : 's'} remaining`;
+        warn.style.display = 'inline-flex';
+      }
+
+      // Check if locked out
+      if (errorMsg.toLowerCase().includes('too many') || errorMsg.includes('No attempts')) {
+        boxes.forEach(b => b.disabled = true);
+        verifyBtn.disabled = true;
+        verifyBtn.innerHTML = 'Too Many Attempts';
+        clearInterval(timerHandle);
+      } else {
+        // Re-enable boxes for retry
+        boxes.forEach(b => { b.disabled = false; b.value = ''; b.classList.remove('filled'); });
+        verifyBtn.innerHTML = verifyBtn.dataset.originalText;
+        verifyBtn.disabled  = false;
+        boxes[0].focus();
+      }
+    }
+
+  } catch (err) {
+    setOtpError('Network error. Please check if the server is running.');
+    showToast('Network error. Is the server running?', 'error');
+    boxes.forEach(b => b.disabled = false);
+    verifyBtn.innerHTML = verifyBtn.dataset.originalText;
+    verifyBtn.disabled  = false;
+  }
+});
+</script>
+</body>
+</html>

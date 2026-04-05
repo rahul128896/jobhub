@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobHub — Find Your Dream Career</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="navbar-container"></div>
+<div id="toast-container" class="toast-container"></div>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="hero-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span> 10,000+ Jobs Available Right Now
+    </div>
+    <h1 class="hero-title">
+      Discover Your<br>
+      <span class="gradient-text">Dream Career</span>
+    </h1>
+    <p class="hero-subtitle">
+      Find the best jobs from top companies. Connect with leading employers and start your professional journey today.
+    </p>
+    <div class="hero-search">
+      <div class="search-wrapper">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="heroSearch" placeholder="Job title, skills or company..." autocomplete="off">
+      </div>
+      <div class="search-wrapper location-wrap">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <input type="text" id="heroLocation" placeholder="City or Remote" autocomplete="off">
+      </div>
+      <button class="hero-search-btn" onclick="doHeroSearch()">Search Jobs</button>
+    </div>
+    <div class="hero-tags">
+      <span>Popular:</span>
+      <a href="jobs.html?q=developer" class="tag">Developer</a>
+      <a href="jobs.html?q=designer" class="tag">Designer</a>
+      <a href="jobs.html?q=data" class="tag">Data Analyst</a>
+      <a href="jobs.html?q=remote" class="tag">Remote</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-float card-1">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" style="height:22px">
+      <div>
+        <div class="fc-title">Software Engineer</div>
+        <div class="fc-sub">Remote · ₹18 LPA</div>
+      </div>
+    </div>
+    <div class="hero-card-float card-2">
+      <div class="stat-big">1M+</div>
+      <div class="stat-label">Happy Job Seekers</div>
+    </div>
+    <div class="hero-card-float card-3">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" style="height:20px">
+      <div>
+        <div class="fc-title">Product Manager</div>
+        <div class="fc-sub">Bangalore · ₹22 LPA</div>
+      </div>
+    </div>
+    <div class="hero-graphic">
+      <svg viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg" width="380">
+        <circle cx="200" cy="180" r="140" fill="url(#heroGrad)" opacity="0.15"/>
+        <circle cx="200" cy="180" r="100" fill="url(#heroGrad)" opacity="0.12"/>
+        <circle cx="200" cy="180" r="60" fill="url(#heroGrad)" opacity="0.2"/>
+        <circle cx="200" cy="180" r="28" fill="#6c47ff"/>
+        <path d="M188 180l8 8 16-16" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Orbit dots -->
+        <circle cx="200" cy="50" r="8" fill="#6c47ff" opacity="0.8"/>
+        <circle cx="330" cy="130" r="6" fill="#00d4aa" opacity="0.9"/>
+        <circle cx="310" cy="290" r="9" fill="#6c47ff" opacity="0.6"/>
+        <circle cx="80" cy="260" r="7" fill="#00d4aa" opacity="0.7"/>
+        <circle cx="70" cy="110" r="10" fill="#6c47ff" opacity="0.5"/>
+        <defs>
+          <radialGradient id="heroGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#6c47ff"/>
+            <stop offset="100%" stop-color="#00d4aa"/>
+          </radialGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- TRUSTED COMPANIES -->
+<section class="companies-section">
+  <p class="companies-label">Trusted by top companies worldwide</p>
+  <div class="companies-marquee">
+    <div class="marquee-track">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">10K+</div>
+      <div class="stat-desc">Jobs Available</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">5K+</div>
+      <div class="stat-desc">Companies</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">1M+</div>
+      <div class="stat-desc">Job Seekers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">95%</div>
+      <div class="stat-desc">Success Rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED JOBS -->
+<section class="featured-section">
+  <div class="section-header">
+    <h2>Featured Jobs</h2>
+    <a href="jobs.html" class="view-all">View all jobs →</a>
+  </div>
+  <div class="featured-grid" id="featuredJobs">
+    <!-- populated by JS -->
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-header center">
+    <h2>How It Works</h2>
+    <p>Three simple steps to land your dream job</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">01</div>
+      <div class="how-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <h3>Create Profile</h3>
+      <p>Sign up and build your professional profile with your skills, experience, and resume.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">02</div>
+      <div class="how-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </div>
+      <h3>Search Jobs</h3>
+      <p>Browse thousands of jobs filtered by skills, location, salary, and job type.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">03</div>
+      <div class="how-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Apply & Track</h3>
+      <p>Apply with one click, upload your resume, and track your application status in real time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to Find Your Dream Job?</h2>
+  <p>Join over 1 million professionals already using JobHub</p>
+  <div class="cta-btns">
+    <button class="btn-primary" onclick="location.href='register.html'" style="padding:14px 32px;font-size:16px">Get Started Free</button>
+    <button class="btn-ghost" onclick="location.href='jobs.html'" style="padding:14px 32px;font-size:16px;background:rgba(255,255,255,0.1);color:white;border-color:rgba(255,255,255,0.3)">Browse Jobs</button>
+  </div>
+</section>
+
+<div id="footer-container"></div>
+
+<script src="js/api.js"></script>
+<script>
+  // Helper: inject HTML and execute any <script> tags inside it
+  function loadComponent(url, containerId) {
+    fetch(url).then(r=>r.text()).then(html=>{
+      const container = document.getElementById(containerId);
+      container.innerHTML = html;
+      // innerHTML doesn't execute <script> tags — re-create them
+      container.querySelectorAll('script').forEach(old => {
+        const s = document.createElement('script');
+        if (old.src) { s.src = old.src; } else { s.textContent = old.textContent; }
+        old.replaceWith(s);
+      });
+    });
+  }
+
+  loadComponent('components/navbar.html', 'navbar-container');
+  loadComponent('components/footer.html', 'footer-container');
+
+  const featuredJobsData = [
+    { id:1, title:'Frontend Developer', company:'Google', location:'Remote', salary:'₹12 LPA', type:'Full-time', logo:'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg', skills:['React','CSS','JS'] },
+    { id:2, title:'Backend Developer', company:'Microsoft', location:'Bangalore', salary:'₹15 LPA', type:'Full-time', logo:'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg', skills:['Node.js','Python','SQL'] },
+    { id:3, title:'UI/UX Designer', company:'Amazon', location:'Delhi', salary:'₹10 LPA', type:'Contract', logo:'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg', skills:['Figma','Adobe XD','Sketch'] },
+    { id:4, title:'Data Scientist', company:'Netflix', location:'Mumbai', salary:'₹20 LPA', type:'Full-time', logo:'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg', skills:['Python','ML','TensorFlow'] },
+    { id:5, title:'DevOps Engineer', company:'Apple', location:'Remote', salary:'₹18 LPA', type:'Full-time', logo:'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg', skills:['Docker','K8s','AWS'] },
+    { id:6, title:'Android Developer', company:'Google', location:'Hyderabad', salary:'₹14 LPA', type:'Full-time', logo:'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg', skills:['Kotlin','Java','Android'] },
+  ];
+
+  const container = document.getElementById('featuredJobs');
+  featuredJobsData.forEach(job => {
+    container.innerHTML += `
+    <div class="feat-card" onclick="location.href='job-details.html?id=${job.id}'">
+      <div class="feat-top">
+        <img src="${job.logo}" alt="${job.company}" class="feat-logo">
+        <span class="badge badge-review" style="background:#f5f4ff;color:#4f2fe0">${job.type}</span>
+      </div>
+      <h3 class="feat-title">${job.title}</h3>
+      <p class="feat-company">${job.company}</p>
+      <div class="feat-meta">
+        <span>📍 ${job.location}</span>
+        <span>💰 ${job.salary}</span>
+      </div>
+      <div class="feat-skills">
+        ${job.skills.map(s=>`<span class="skill-chip">${s}</span>`).join('')}
+      </div>
+      <button class="feat-btn" onclick="event.stopPropagation();location.href='apply.html?id=${job.id}'">Apply Now</button>
+    </div>`;
+  });
+
+  function doHeroSearch() {
+    const q = document.getElementById('heroSearch').value;
+    const loc = document.getElementById('heroLocation').value;
+    let url = 'jobs.html';
+    const params = [];
+    if (q) params.push('q=' + encodeURIComponent(q));
+    if (loc) params.push('location=' + encodeURIComponent(loc));
+    if (params.length) url += '?' + params.join('&');
+    window.location.href = url;
+  }
+
+  document.getElementById('heroSearch').addEventListener('keypress', e => { if(e.key==='Enter') doHeroSearch(); });
+</script>
+</body>
+</html>

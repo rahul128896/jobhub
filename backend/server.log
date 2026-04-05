@@ -1,0 +1,68 @@
+
+=======================================================
+  >> JobHub Job Portal - Starting Server
+=======================================================
+[DB] Initializing SQLITE database...
+[DB] Sample users inserted
+[DB] Sample jobs inserted
+
+  [+] Server running at: http://localhost:5001
+  [+] Database:          jobhub.db
+  [+] Uploads folder:    uploads/
+
+  Demo Accounts:
+  +---------------------------------------------+
+  | Job Seeker:  rahul@example.com / password123 |
+  | Recruiter:   recruiter@google.com / recruiter123 |
+  +---------------------------------------------+
+
+  Press Ctrl+C to stop
+
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.214.60:5001
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 409-887-335
+
+=======================================================
+  >> JobHub Job Portal - Starting Server
+=======================================================
+[DB] Initializing SQLITE database...
+[DB] Sample users inserted
+[DB] Sample jobs inserted
+
+  [+] Server running at: http://localhost:5001
+  [+] Database:          jobhub.db
+  [+] Uploads folder:    uploads/
+
+  Demo Accounts:
+  +---------------------------------------------+
+  | Job Seeker:  rahul@example.com / password123 |
+  | Recruiter:   recruiter@google.com / recruiter123 |
+  +---------------------------------------------+
+
+  Press Ctrl+C to stop
+
+Traceback (most recent call last):
+  File "/Users/kartikeywariyal/Downloads/jobportal/backend/run.py", line 43, in <module>
+    app.run(host='0.0.0.0', port=port, debug=debug)
+  File "/Users/kartikeywariyal/Downloads/jobportal/.venv_mac/lib/python3.12/site-packages/flask/app.py", line 662, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "/Users/kartikeywariyal/Downloads/jobportal/.venv_mac/lib/python3.12/site-packages/werkzeug/serving.py", line 1116, in run_simple
+    run_with_reloader(
+  File "/Users/kartikeywariyal/Downloads/jobportal/.venv_mac/lib/python3.12/site-packages/werkzeug/_reloader.py", line 453, in run_with_reloader
+    ensure_echo_on()
+  File "/Users/kartikeywariyal/Downloads/jobportal/.venv_mac/lib/python3.12/site-packages/werkzeug/_reloader.py", line 433, in ensure_echo_on
+    termios.tcsetattr(sys.stdin, termios.TCSANOW, attributes)
+termios.error: (4, 'Interrupted system call')
+Fatal Python error: init_sys_streams: can't initialize sys standard streams
+Python runtime state: core initialized
+OSError: [Errno 9] Bad file descriptor
+
+Current thread 0x00000001f9fe9f00 (most recent call first):
+  <no Python frame>

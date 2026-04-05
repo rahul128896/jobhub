@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — JobHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-page">
+
+<div id="navbar-container"></div>
+<div id="toast-container" class="toast-container"></div>
+
+<div class="dashboard-layout">
+  <!-- SIDEBAR -->
+  <aside class="dash-sidebar" id="dashSidebar">
+    <div class="dash-user">
+      <div class="dash-avatar" id="dashAvatar" aria-label="User avatar"></div>
+      <div class="dash-name" id="dashName">Loading...</div>
+      <span class="dash-role" id="dashRoleBadge">Job Seeker</span>
+    </div>
+
+    <!-- Job Seeker Nav -->
+    <div id="seekerNav">
+      <p class="dash-nav-section">Main</p>
+      <ul class="dash-nav">
+        <li><a href="#" class="active" onclick="showPanel('overview', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Overview
+        </a></li>
+        <li><a href="#" onclick="showPanel('applications', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          My Applications
+        </a></li>
+        <li><a href="#" onclick="showPanel('saved', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+          Saved Jobs
+        </a></li>
+        <li><a href="#" onclick="showPanel('profile', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a></li>
+        <li><a href="#" onclick="showPanel('ai-match', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          AI Resume Match
+        </a></li>
+      </ul>
+      <p class="dash-nav-section">Quick Actions</p>
+      <ul class="dash-nav">
+        <li><a href="jobs.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          Browse Jobs
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- Recruiter Nav -->
+    <div id="recruiterNav" style="display:none">
+      <p class="dash-nav-section">Main</p>
+      <ul class="dash-nav">
+        <li><a href="#" class="active" onclick="showPanel('rec-overview', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Overview
+        </a></li>
+        <li><a href="#" onclick="showPanel('post-job', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Post a Job
+        </a></li>
+        <li><a href="#" onclick="showPanel('my-jobs', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          My Jobs
+        </a></li>
+        <li><a href="#" onclick="showPanel('applicants', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          Applicants
+        </a></li>
+        <li><a href="#" onclick="showPanel('profile', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Profile
+        </a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dash-main">
+    <!-- ── JOB SEEKER PANELS ── -->
+
+    <!-- Overview -->
+    <div id="panel-overview" class="dash-panel">
+      <div class="dash-header">
+        <div>
+          <h1>Welcome back, <span id="welcomeName">User</span> 👋</h1>
+          <p>Here's what's happening with your job search</p>
+        </div>
+        <button class="btn-primary" onclick="location.href='jobs.html'">Browse Jobs</button>
+      </div>
+      <div class="dash-stats" id="seekerStats"></div>
+      <div class="dash-section">
+        <div class="dash-section-header">
+          <h2>Recent Applications</h2>
+          <a href="#" onclick="showPanel('applications', null)">View all</a>
+        </div>
+        <table class="app-table" id="recentAppTable">
+          <thead><tr>
+            <th>Job</th>
+            <th>Applied</th>
+            <th>Status</th>
+          </tr></thead>
+          <tbody id="recentAppBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Applications -->
+    <div id="panel-applications" class="dash-panel" style="display:none">
+      <div class="dash-header">
+        <div><h1>My Applications</h1><p>Track all your job applications</p></div>
+      </div>
+      <div class="dash-section">
+        <table class="app-table">
+          <thead><tr>
+            <th>Job</th>
+            <th>Applied Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr></thead>
+          <tbody id="allAppBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Saved Jobs -->
+    <div id="panel-saved" class="dash-panel" style="display:none">
+      <div class="dash-header">
+        <div><h1>Saved Jobs</h1><p>Jobs you've bookmarked</p></div>
+      </div>
+      <div class="dash-section" id="savedJobsSection"></div>
+    </div>
+
+    <!-- AI Resume Match Panel -->
+    <div id="panel-ai-match" class="dash-panel" style="display:none">
+      <div class="dash-header">
+        <div><h1>AI Resume Match ✨</h1><p>Upload your resume to instantly find the best job matches using robust Gemini Native AI.</p></div>
+      </div>
+      <div class="dash-section">
+        <div style="padding: 30px; text-align: center; border: 2px dashed var(--surface-3); border-radius: 12px; margin-bottom: 20px;">
+          <input type="file" id="resumeUploadInput" accept=".pdf,.doc,.docx" style="display:none;">
+          <button class="btn-primary" onclick="document.getElementById('resumeUploadInput').click()" style="margin-bottom: 10px;">Select Resume</button>
+          <div style="font-size: 13px; color: var(--text-3);" id="resumeFileName">No file selected. Only PDF and DOCX (Max 2MB).</div>
+          <button class="btn-ghost" id="resumeProcessBtn" style="margin-top: 15px; display: none;" onclick="processResume()">Scan with AI</button>
+        </div>
+        
+        <div id="aiLoading" style="display: none; text-align: center; padding: 20px; color: var(--brand);">Scanning document and matching against global jobs natively...</div>
+        <div id="aiError" style="display: none; padding: 16px; background: #ffebeb; color: #d32f2f; border-radius: 8px; margin-bottom: 20px;"></div>
+        
+        <div id="aiResults" style="display:none;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+              <div style="background: var(--surface-1); padding: 20px; border-radius: 12px; border: 1px solid var(--surface-2);">
+                <h3 style="margin-bottom: 10px; font-size: 15px;">Target Experience Level</h3>
+                <div id="aiExpLevel" style="font-weight: 600; color: var(--brand); text-transform: capitalize; font-size: 18px;"></div>
+              </div>
+              <div style="background: var(--surface-1); padding: 20px; border-radius: 12px; border: 1px solid var(--surface-2);">
+                <h3 style="margin-bottom: 10px; font-size: 15px;">Recommended Roles</h3>
+                <div id="aiRoles" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+              </div>
+              <div style="background: var(--surface-1); padding: 20px; border-radius: 12px; border: 1px solid var(--surface-2); grid-column: 1 / -1;">
+                <h3 style="margin-bottom: 10px; font-size: 15px;">Extracted Top Skills</h3>
+                <div id="aiSkillsList" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+              </div>
+            </div>
+            
+            <div class="dash-section-header">
+              <h2>Your Perfect Job Matches</h2>
+            </div>
+            <div class="rec-jobs-grid" id="aiMatchingJobsGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RECRUITER PANELS ── -->
+
+    <!-- Rec Overview -->
+    <div id="panel-rec-overview" class="dash-panel" style="display:none">
+      <div class="dash-header">
+        <div>
+          <h1>Recruiter Dashboard 🏢</h1>
+          <p>Manage your job listings and applicants</p>
+        </div>
+        <button class="btn-primary" onclick="showPanel('post-job', null)">+ Post New Job</button>
+      </div>
+      <div class="dash-stats" id="recruiterStats"></div>
+      <div class="dash-section">
+        <div class="dash-section-header">
+          <h2>Your Active Jobs</h2>
+          <a href="#" onclick="showPanel('my-jobs', null)">View all</a>
+        </div>
+        <div class="rec-jobs-grid" id="recJobsPreview"></div>
+      </div>
+    </div>
+
+    <!-- Post Job -->
+    <div id="panel-post-job" class="dash-panel" style="display:none">
+      <div class="dash-header">
+        <div><h1>Post a New Job</h1><p>Fill in the details to attract top candidates</p></div>
+      </div>
+      <div class="dash-section post-job-form">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div class="form-group">
+            <label>Job Title *</label>
+            <input type="text" id="pjTitle" placeholder="e.g. Frontend Developer">
+          </div>
+          <div class="form-group">
+            <label>Company Name *</label>
+            <input type="text" id="pjCompany" placeholder="Your company name">
+          </div>
+          <div class="form-group">
+            <label>Location *</label>
+            <input type="text" id="pjLocation" placeholder="e.g. Bangalore / Remote">
+          </div>
+          <div class="form-group">
+            <label>Salary Range</label>
+            <input type="text" id="pjSalary" placeholder="e.g. ₹12-15 LPA">
+          </div>
+          <div class="form-group">
+            <label>Job Type</label>
+            <select id="pjType">
+              <option>Full-time</option>
+              <option>Part-time</option>
+              <option>Contract</option>
+              <option>Internship</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Experience Required</label>
+            <select id="pjExp">
+              <option>Fresher (0-1 yr)</option>
+              <option>1-3 years</option>
+              <option>3-5 years</option>
+              <option>5+ years</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Job Description *</label>
+          <textarea id="pjDesc" rows="5" placeholder="Describe the role, team culture, and what you're looking for..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Required Skills (comma-separated)</label>
+          <input type="text" id="pjSkills" placeholder="React, Node.js, MongoDB, Docker">
+        </div>
+        <button class="post-job-submit" onclick="postJob()">Publish Job Listing</button>
+      </div>
+    </div>
+
+    <!-- My Jobs -->
+    <div id="panel-my-jobs" class="dash-panel" style="display:none">
+      <div class="dash-header">
+        <div><h1>My Job Listings</h1><p>Manage your posted jobs</p></div>
+        <button class="btn-primary" onclick="showPanel('post-job', null)">+ Post New Job</button>
+      </div>
+      <div class="dash-section">
+        <div class="rec-jobs-grid" id="recAllJobs"></div>
+      </div>
+    </div>
+
+    <!-- Applicants -->
+    <div id="panel-applicants" class="dash-panel" style="display:none">
+      <div class="dash-header">
+        <div><h1>Applicants</h1><p>Review and manage candidate applications</p></div>
+      </div>
+      <div class="dash-section">
+        <table class="app-table">
+          <thead><tr>
+            <th>Candidate</th>
+            <th>Applied For</th>
+            <th>Applied</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr></thead>
+          <tbody id="applicantsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Profile (shared) -->
+    <div id="panel-profile" class="dash-panel" style="display:none">
+      <div class="dash-header">
+        <div><h1>My Profile</h1><p>Keep your information up to date</p></div>
+      </div>
+      <div class="dash-section">
+        <!-- Profile Picture Section -->
+        <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--surface-2);">
+          <label style="display: block; margin-bottom: 12px; font-weight: 600; font-size: 14px;">Profile Picture</label>
+          <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- Preview -->
+            <div style="position: relative;">
+              <div id="avatarPreview" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 3px solid var(--surface-3); display:flex; align-items:center; justify-content:center;"></div>
+            </div>
+            <!-- Upload Input -->
+            <div style="display: flex; flex-direction: column; gap: 10px; flex: 1;">
+              <input type="file" id="avatarInput" accept="image/*" 
+                     style="padding: 8px 12px; border: 1px solid var(--surface-2); border-radius: 6px; font-size: 13px; cursor: pointer;">
+              <div style="font-size: 12px; color: var(--text-3); line-height: 1.5;">
+                Supported formats: JPG, PNG, GIF<br>
+                Maximum size: 5MB<br>
+                <span id="avatarStatus" style="margin-top: 5px; display: block;"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="profName">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="profEmail" readonly style="background:var(--surface-2)">
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" id="profPhone" placeholder="+91 98765 43210">
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="profLocation" placeholder="City, State">
+          </div>
+          <div class="form-group" style="grid-column:1/-1">
+            <label>Bio / Summary</label>
+            <textarea id="profBio" rows="3" placeholder="Brief professional summary..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>LinkedIn URL</label>
+            <input type="url" id="profLinkedin" placeholder="linkedin.com/in/yourname">
+          </div>
+          <div class="form-group">
+            <label>Portfolio / GitHub</label>
+            <input type="url" id="profPortfolio" placeholder="github.com/yourname">
+          </div>
+        </div>
+        <button class="post-job-submit" onclick="saveProfile()" style="margin-top:10px">Save Changes</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="footer-container"></div>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+<script>
+  function loadComponent(url, containerId) {
+    fetch(url).then(r=>r.text()).then(html=>{
+      const el = document.getElementById(containerId);
+      el.innerHTML = html;
+      el.querySelectorAll('script').forEach(old => {
+        const s = document.createElement('script');
+        if (old.src) { s.src = old.src; } else { s.textContent = old.textContent; }
+        old.replaceWith(s);
+      });
+    });
+  }
+  loadComponent('components/navbar.html', 'navbar-container');
+  loadComponent('components/footer.html', 'footer-container');
+</script>
+</body>
+</html>

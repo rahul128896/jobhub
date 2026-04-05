@@ -1,0 +1,200 @@
+<nav class="navbar" id="mainNav">
+  <a href="index.html" class="logo">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block">
+      <rect width="28" height="28" rx="8" fill="url(#logoGrad)"/>
+      <rect x="8" y="10" width="12" height="9" rx="2" stroke="white" stroke-width="1.6" fill="none"/>
+      <path d="M11 10V8.5A2.5 2.5 0 0114 6v0a2.5 2.5 0 012.5 2.5V10" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="14" cy="14.5" r="1.2" fill="white"/>
+      <defs>
+        <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+          <stop offset="0%" stop-color="#7c5cff"/>
+          <stop offset="100%" stop-color="#4f2fe0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    Job<span>Hub</span>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="jobs.html">Browse Jobs</a></li>
+    <li><a href="dashboard.html" id="dashLink" style="display:none">Dashboard</a></li>
+  </ul>
+
+  <!-- Guest (not logged in) -->
+  <div class="nav-actions" id="guestActions">
+    <button class="btn-ghost"   onclick="location.href='login.html'">Login</button>
+    <button class="btn-primary" onclick="location.href='register.html'">Get Started</button>
+  </div>
+
+  <!-- Logged-in user profile -->
+  <div class="profile-menu" id="userProfile" style="display:none">
+    <div id="navAvatarEl" class="profile-icon" style="display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:white;"></div>
+    <div>
+      <div class="profile-name" id="navUserName">User</div>
+      <div class="profile-role" id="navUserRole">Job Seeker</div>
+    </div>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    <div class="dropdown">
+      <a href="dashboard.html">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="jobs.html">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+        Browse Jobs
+      </a>
+      <a href="admin.html" id="adminLink" style="display:none">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Admin Panel
+      </a>
+      <a href="#" onclick="doLogout()" class="logout-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Logout
+      </a>
+    </div>
+  </div>
+
+  <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile slide-out menu -->
+<div class="mobile-menu-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <a href="index.html" class="logo" style="font-size:18px;">
+      <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="url(#mLogoGrad)"/><rect x="8" y="10" width="12" height="9" rx="2" stroke="white" stroke-width="1.6" fill="none"/><path d="M11 10V8.5A2.5 2.5 0 0114 6v0a2.5 2.5 0 012.5 2.5V10" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="14.5" r="1.2" fill="white"/><defs><linearGradient id="mLogoGrad" x1="0" y1="0" x2="28" y2="28"><stop offset="0%" stop-color="#7c5cff"/><stop offset="100%" stop-color="#4f2fe0"/></linearGradient></defs></svg>
+      Job<span>Hub</span>
+    </a>
+    <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  </div>
+  <div class="mobile-menu-body">
+    <a href="index.html" class="mobile-link">Home</a>
+    <a href="jobs.html" class="mobile-link">Browse Jobs</a>
+    <a href="dashboard.html" class="mobile-link" id="mobileDashLink" style="display:none">Dashboard</a>
+    <a href="admin.html" class="mobile-link" id="mobileAdminLink" style="display:none">Admin Panel</a>
+  </div>
+  <div class="mobile-menu-footer" id="mobileAuthActions">
+    <button class="btn-ghost" onclick="location.href='login.html'" style="width:100%">Login</button>
+    <button class="btn-primary" onclick="location.href='register.html'" style="width:100%">Get Started</button>
+  </div>
+  <div class="mobile-menu-footer" id="mobileUserActions" style="display:none">
+    <div class="mobile-user-info" id="mobileUserInfo"></div>
+    <button class="btn-ghost" onclick="doLogout()" style="width:100%;color:var(--danger);border-color:var(--danger)">Logout</button>
+  </div>
+</div>
+
+<script>
+// Wait for Auth to be available (api.js might load after navbar injection)
+function _initNavbar() {
+  var token, user;
+
+  // Try reading from window.Auth first, fall back to localStorage directly
+  if (typeof Auth !== 'undefined') {
+    token = Auth.getToken();
+    user  = Auth.getUser();
+  } else {
+    token = localStorage.getItem('token');
+    try { user = JSON.parse(localStorage.getItem('user') || 'null'); } catch(e) { user = null; }
+  }
+
+  if (token && user) {
+    var ga = document.getElementById('guestActions');
+    var up = document.getElementById('userProfile');
+    var dl = document.getElementById('dashLink');
+    if (ga) ga.style.display  = 'none';
+    if (up) up.style.display  = 'flex';
+    if (dl) dl.style.display  = 'block';
+
+    var nun = document.getElementById('navUserName');
+    var nur = document.getElementById('navUserRole');
+    if (nun) nun.textContent = user.name  || 'User';
+    if (nur) nur.textContent = user.role === 'recruiter' ? 'Recruiter' : user.role === 'admin' ? 'Admin' : 'Job Seeker';
+
+    // Initials-based avatar
+    var avatarEl = document.getElementById('navAvatarEl');
+    if (avatarEl) {
+      var photoUrl = user.avatar && user.avatar.trim();
+      if (photoUrl) {
+        avatarEl.style.backgroundImage = "url('" + photoUrl + "')";
+        avatarEl.style.backgroundSize = 'cover';
+        avatarEl.style.backgroundPosition = 'center';
+        avatarEl.textContent = '';
+      } else {
+        var name = user.name || user.email || '?';
+        var initials = name.trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join('').toUpperCase();
+        var hash = 0;
+        for (var i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+        var hue = Math.abs(hash) % 360;
+        avatarEl.style.background = 'hsl(' + hue + ',55%,48%)';
+        avatarEl.textContent = initials;
+      }
+    }
+
+    // Show admin link if admin
+    if (user.role === 'admin') {
+      var al = document.getElementById('adminLink');
+      if (al) al.style.display = 'flex';
+      var mal = document.getElementById('mobileAdminLink');
+      if (mal) mal.style.display = 'block';
+    }
+
+    // Mobile: show user actions, hide auth buttons
+    var maa = document.getElementById('mobileAuthActions');
+    var mua = document.getElementById('mobileUserActions');
+    var mdl = document.getElementById('mobileDashLink');
+    if (maa) maa.style.display = 'none';
+    if (mua) mua.style.display = 'flex';
+    if (mdl) mdl.style.display = 'block';
+
+    var mui = document.getElementById('mobileUserInfo');
+    if (mui) {
+      mui.innerHTML = '<strong>' + (user.name || 'User') + '</strong><span style="font-size:12px;color:var(--text-3)">' + (user.email || '') + '</span>';
+    }
+  }
+
+  // Highlight active page
+  var page = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    if (a.getAttribute('href') === page) a.classList.add('active');
+  });
+}
+
+// Run immediately and also when DOM is ready (handles various loading orders)
+_initNavbar();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _initNavbar);
+}
+
+function doLogout() {
+  // Gracefully handle Auth not being available
+  if (typeof Auth !== 'undefined' && Auth.clear) {
+    Auth.clear();
+  } else {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
+  window.location.href = 'index.html';
+}
+
+var _mobileOpen = false;
+function toggleMobileMenu() {
+  _mobileOpen = !_mobileOpen;
+  var menu = document.getElementById('mobileMenu');
+  var overlay = document.getElementById('mobileOverlay');
+  if (menu) menu.classList.toggle('open', _mobileOpen);
+  if (overlay) overlay.classList.toggle('open', _mobileOpen);
+  document.body.style.overflow = _mobileOpen ? 'hidden' : '';
+}
+
+function closeMobileMenu() {
+  _mobileOpen = false;
+  var menu = document.getElementById('mobileMenu');
+  var overlay = document.getElementById('mobileOverlay');
+  if (menu) menu.classList.remove('open');
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>

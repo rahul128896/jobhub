@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply for Job — JobHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/apply.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="apply-page">
+
+<div id="navbar-container"></div>
+<div id="toast-container" class="toast-container"></div>
+
+<!-- HEADER -->
+<section class="apply-header">
+  <div class="apply-job-preview">
+    <img id="applyLogo" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="">
+    <div>
+      <div class="apply-job-title" id="applyJobTitle">Frontend Developer</div>
+      <div class="apply-job-meta" id="applyJobMeta">Google · Remote · ₹12 LPA</div>
+    </div>
+  </div>
+  <div class="apply-progress">
+    <div class="progress-step">
+      <div class="step-circle active" id="step1">1</div>
+      <div class="step-label active">Details</div>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-step">
+      <div class="step-circle" id="step2">2</div>
+      <div class="step-label">Resume</div>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-step">
+      <div class="step-circle" id="step3">3</div>
+      <div class="step-label">Submit</div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<div class="apply-main">
+  <!-- FORM -->
+  <div class="apply-form-card">
+    <!-- STEP 1 -->
+    <div id="formStep1">
+      <h2>Personal Information</h2>
+      <p class="section-sub">Tell us a bit about yourself</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="appName">Full Name *</label>
+          <input type="text" id="appName" placeholder="Rahul Sharma">
+        </div>
+        <div class="form-group">
+          <label for="appEmail">Email Address *</label>
+          <input type="email" id="appEmail" placeholder="rahul@example.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="appPhone">Phone Number *</label>
+          <input type="tel" id="appPhone" placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+          <label for="appLinkedin">LinkedIn Profile</label>
+          <input type="url" id="appLinkedin" placeholder="linkedin.com/in/yourname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="appPortfolio">Portfolio / GitHub URL</label>
+        <input type="url" id="appPortfolio" placeholder="github.com/yourname">
+      </div>
+      <div class="form-group">
+        <label for="appExp">Total Experience</label>
+        <select id="appExp">
+          <option value="">Select experience</option>
+          <option>Fresher (0-1 year)</option>
+          <option>1-2 years</option>
+          <option>2-5 years</option>
+          <option>5-10 years</option>
+          <option>10+ years</option>
+        </select>
+      </div>
+      <button class="apply-submit" onclick="goStep(2)">Next: Upload Resume →</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="formStep2" style="display:none">
+      <h2>Resume & Cover Letter</h2>
+      <p class="section-sub">Upload your resume and write a compelling cover letter</p>
+
+      <div class="form-group">
+        <label>Resume (PDF, DOC, DOCX — Max 5MB) *</label>
+        <div class="file-upload-zone" id="dropZone" onclick="document.getElementById('resumeFile').click()" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+          <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" onchange="handleFileSelect(event)">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <p>Drag & drop your resume here, or <strong style="color:var(--primary)">browse</strong></p>
+          <span>Supported: PDF, DOC, DOCX up to 5MB</span>
+        </div>
+        <div id="fileSelected" class="file-selected" style="display:none">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span class="fname" id="fileName"></span>
+          <span class="fsize" id="fileSize"></span>
+          <button class="file-remove" onclick="removeFile()" type="button">✕</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="coverLetter">Cover Letter *</label>
+        <textarea id="coverLetter" rows="7" placeholder="Dear Hiring Manager,&#10;&#10;I am excited to apply for the Frontend Developer position at Google. With 3 years of experience building modern web applications using React and TypeScript, I believe I am an excellent fit for this role..."></textarea>
+      </div>
+
+      <div style="display:flex;gap:12px">
+        <button class="apply-submit" onclick="goStep(1)" style="background:white;color:var(--text-2);border:1.5px solid var(--border);flex:0 0 auto;width:auto;padding:15px 24px">← Back</button>
+        <button class="apply-submit" onclick="goStep(3)" style="flex:1">Review & Submit →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="formStep3" style="display:none">
+      <h2>Review Your Application</h2>
+      <p class="section-sub">Please review before submitting</p>
+      <div id="reviewContent" style="margin-bottom:28px"></div>
+      <div style="display:flex;gap:12px">
+        <button class="apply-submit" onclick="goStep(2)" style="background:white;color:var(--text-2);border:1.5px solid var(--border);flex:0 0 auto;width:auto;padding:15px 24px">← Edit</button>
+        <button class="apply-submit" id="submitBtn" onclick="submitApplication()" style="flex:1">Submit Application 🚀</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="apply-success" id="successScreen">
+      <div class="success-icon">🎉</div>
+      <h2>Application Submitted!</h2>
+      <p>Your application has been sent to <strong id="successCompany">the company</strong>. You'll hear back within 3–5 business days.</p>
+      <button class="apply-submit" onclick="location.href='dashboard.html'" style="max-width:240px;margin:0 auto">View My Applications</button>
+      <br><br>
+      <button class="apply-submit" onclick="location.href='jobs.html'" style="max-width:240px;margin:0 auto;background:white;color:var(--primary);border:1.5px solid var(--primary)">Browse More Jobs</button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="apply-sidebar">
+    <div class="apply-tips">
+      <h3>💡 Application Tips</h3>
+      <div class="tip">
+        <span class="tip-icon">📄</span>
+        <span>Keep your resume to 1-2 pages and tailor it to the job description.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">✍️</span>
+        <span>Personalize your cover letter — mention the company and role specifically.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🔗</span>
+        <span>Include a LinkedIn profile link with updated work experience.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">⚡</span>
+        <span>Apply within 24 hours for a higher chance of being shortlisted.</span>
+      </div>
+    </div>
+
+    <div class="apply-tips">
+      <h3>📋 Application Checklist</h3>
+      <div id="checklist">
+        <div class="tip"><span id="chk1">⬜</span> <span>Personal info filled</span></div>
+        <div class="tip"><span id="chk2">⬜</span> <span>Resume uploaded</span></div>
+        <div class="tip"><span id="chk3">⬜</span> <span>Cover letter written</span></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div id="footer-container"></div>
+<script src="js/api.js"></script>
+<script src="js/apply.js"></script>
+<script>
+  function loadComponent(url, containerId) {
+    fetch(url).then(r=>r.text()).then(html=>{
+      const el = document.getElementById(containerId);
+      el.innerHTML = html;
+      el.querySelectorAll('script').forEach(old => {
+        const s = document.createElement('script');
+        if (old.src) { s.src = old.src; } else { s.textContent = old.textContent; }
+        old.replaceWith(s);
+      });
+    });
+  }
+  loadComponent('components/navbar.html', 'navbar-container');
+  loadComponent('components/footer.html', 'footer-container');
+</script>
+</body>
+</html>
