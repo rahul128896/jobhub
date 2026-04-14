@@ -1,46 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #8B5CF6;
-  --primary-dark: #7C3AED;
-  --primary-light: #A78BFA;
-  --primary-glow: rgba(139, 92, 246, 0.5);
+  --primary: #6366F1;
+  --primary-dark: #4F46E5;
+  --primary-light: #818CF8;
+  --primary-glow: rgba(99, 102, 241, 0.4);
   
-  --accent: #14F1D9;
-  --accent-dark: #00CCB1;
-  --accent-glow: rgba(20, 241, 217, 0.4);
+  --accent: #EC4899;
+  --accent-dark: #DB2777;
+  --accent-glow: rgba(236, 72, 153, 0.4);
   
-  --dark: #07070F;
-  --dark-2: #0E0F19;
-  --dark-3: #161726;
-  --glass: rgba(18, 19, 31, 0.65);
-  --glass-hover: rgba(28, 30, 48, 0.85);
+  --dark: #0F0F1E;
+  --dark-2: #1A1A2E;
+  --dark-3: #252540;
+  --glass: rgba(20, 20, 40, 0.8);
+  --glass-hover: rgba(30, 30, 60, 0.95);
 
-  --surface: #10111A;
-  --surface-2: #161726;
-  --surface-3: #1E2036;
+  --surface: #161629;
+  --surface-2: #1F1F3A;
+  --surface-3: #2D2D4A;
   
-  --text: #F3F4F6;
-  --text-2: #9CA3AF;
-  --text-3: #6B7280;
+  --text: #FFFFFF;
+  --text-2: #B0B0D0;
+  --text-3: #8080A0;
   
   --border: rgba(255, 255, 255, 0.08);
   --border-2: rgba(255, 255, 255, 0.12);
-  --border-light: rgba(255, 255, 255, 0.2);
+  --border-light: rgba(255, 255, 255, 0.18);
 
   --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
   
-  --radius: 20px;
+  --radius: 18px;
   --radius-sm: 12px;
-  --radius-lg: 32px;
+  --radius-lg: 28px;
   
-  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  --shadow-neon: 0 0 24px var(--primary-glow);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --shadow-neon: 0 0 30px var(--primary-glow);
   
-  --transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 *, *::before, *::after {
@@ -177,7 +177,47 @@ img { max-width: 100%; }
   font-size: 15px;
   font-weight: 600;
   color: var(--text);
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: white;
+  background: rgba(232, 149, 111, 0.08);
+  box-shadow: none;
+}
+
+.btn-primary {
+  padding: 12px 32px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+  box-shadow: 0 8px 20px var(--primary-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px var(--primary-glow);
+}
+
+.btn-ghost {
+  padding: 11px 24px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: rgba(99, 102, 241, 0.08);
   backdrop-filter: blur(8px);
   cursor: pointer;
   transition: var(--transition);
@@ -186,29 +226,15 @@ img { max-width: 100%; }
 
 .btn-ghost:hover {
   border-color: var(--primary);
-  color: #fff;
-  background: var(--primary-glow);
-  box-shadow: 0 0 20px var(--primary-glow);
-}
-
-.btn-primary {
-  padding: 10px 24px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  font-family: inherit;
-  box-shadow: 0 4px 14px var(--primary-glow);
+  background: rgba(99, 102, 241, 0.15);
+  box-shadow: 0 4px 12px var(--primary-glow);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px var(--primary-glow);
-  filter: brightness(1.1);
+  background: var(--accent-dark);
+  box-shadow: 0 6px 20px var(--accent-glow);
 }
 
 .profile-menu {

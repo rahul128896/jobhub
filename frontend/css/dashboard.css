@@ -9,9 +9,7 @@
 /* SIDEBAR NAV */
 .dash-sidebar {
   width: 280px;
-  background: rgba(7, 7, 15, 0.4);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  background: var(--surface);
   border-right: 1px solid var(--border);
   padding: 30px 0;
   flex-shrink: 0;
@@ -28,28 +26,40 @@
 }
 
 .dash-avatar {
-  width: 56px; height: 56px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--primary-light);
+  border: 3px solid var(--accent);
   margin-bottom: 10px;
 }
 
-.dash-name { font-size: 15px; font-weight: 700; }
+.dash-name { 
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
 .dash-role {
   display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
   border-radius: 20px;
-  background: var(--surface-3);
-  color: var(--primary);
+  background: rgba(232, 149, 111, 0.1);
+  color: var(--accent);
   margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
-.dash-nav { list-style: none; padding: 0 12px; }
+.dash-nav { 
+  list-style: none;
+  padding: 0 12px;
+}
 
-.dash-nav li { margin-bottom: 2px; }
+.dash-nav li { 
+  margin-bottom: 2px;
+}
 
 .dash-nav a {
   display: flex;
@@ -63,9 +73,18 @@
   transition: var(--transition);
 }
 
-.dash-nav a:hover { background: var(--surface-2); color: var(--primary); }
-.dash-nav a.active { background: var(--surface-3); color: var(--primary); font-weight: 600; }
-.dash-nav a svg { flex-shrink: 0; }
+.dash-nav a:hover { 
+  background: var(--surface-2);
+  color: var(--accent);
+}
+.dash-nav a.active { 
+  background: rgba(232, 149, 111, 0.1);
+  color: var(--accent);
+  font-weight: 600;
+}
+.dash-nav a svg { 
+  flex-shrink: 0;
+}
 
 .dash-nav-section {
   font-size: 10px;
