@@ -3,8 +3,8 @@
 
 /* HEADER */
 .jobs-header {
-  background: linear-gradient(145deg, var(--dark), var(--dark-2));
-  padding: 60px 80px 50px;
+  background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 100%);
+  padding: 80px 80px 60px;
   color: var(--text);
   position: relative;
   overflow: hidden;
@@ -14,25 +14,37 @@
 .jobs-header::before {
   content: '';
   position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+  top: -120px; left: -100px;
+  filter: blur(60px);
+}
+
+.jobs-header::after {
+  content: '';
+  position: absolute;
   width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(232, 149, 111, 0.15) 0%, transparent 70%);
-  top: -100px; left: -80px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, transparent 70%);
+  bottom: -80px; right: 50px;
+  filter: blur(60px);
 }
 
 .jobs-header h1 { 
-  font-size: 40px;
-  margin-bottom: 8px;
+  font-size: 48px;
+  margin-bottom: 12px;
   position: relative;
   z-index: 1;
-  font-weight: 700;
+  font-weight: 900;
+  letter-spacing: -0.02em;
 }
 .jobs-header p { 
   color: var(--text-2);
-  margin-bottom: 32px;
+  margin-bottom: 40px;
   position: relative;
   z-index: 1;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
+  max-width: 500px;
 }
 
 .jobs-search-bar {
@@ -47,13 +59,19 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  padding: 0 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  padding: 0 16px;
   flex: 1;
   min-width: 180px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  transition: var(--transition);
+}
+
+.search-field:focus-within {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.4);
 }
 
 .search-field svg { 
@@ -66,9 +84,9 @@
   border: none;
   outline: none;
   color: var(--text);
-  font-size: 14px;
+  font-size: 15px;
   font-family: inherit;
-  padding: 12px 0;
+  padding: 14px 0;
   flex: 1;
 }
 
@@ -77,22 +95,23 @@
 }
 
 .search-btn {
-  padding: 12px 28px;
-  background: var(--accent);
+  padding: 14px 36px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
   border: none;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
   font-family: inherit;
   white-space: nowrap;
+  box-shadow: 0 8px 20px var(--primary-glow);
 }
 
 .search-btn:hover { 
-  background: var(--accent-dark);
-  transform: translateY(-1px);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px var(--primary-glow);
 }
 
 /* MAIN LAYOUT */
@@ -110,17 +129,18 @@
   flex-shrink: 0;
   background: var(--surface-2);
   border-radius: var(--radius-lg);
-  padding: 28px;
-  border: 1px solid var(--border);
+  padding: 32px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
   position: sticky;
   top: 88px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .filters-title {
   font-family: 'Outfit', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 24px;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -129,8 +149,8 @@
 
 .clear-filters {
   font-size: 12px;
-  color: var(--accent);
-  font-weight: 600;
+  color: var(--primary-light);
+  font-weight: 700;
   cursor: pointer;
   background: none;
   border: none;
@@ -138,24 +158,27 @@
   transition: var(--transition);
 }
 
-.clear-filters:hover { color: var(--accent-dark); }
+.clear-filters:hover { 
+  color: var(--primary);
+  text-decoration: underline;
+}
 
-.filter-group { margin-bottom: 26px; }
+.filter-group { margin-bottom: 28px; }
 
 .filter-group label {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text);
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
 }
 
 .filter-group select {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
+  padding: 11px 14px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: 10px;
   font-size: 13px;
   font-family: inherit;
@@ -167,7 +190,7 @@
 }
 
 .filter-group select:focus { 
-  border-color: var(--accent);
+  border-color: rgba(99, 102, 241, 0.4);
   background: var(--surface);
 }
 
@@ -231,25 +254,42 @@
 /* JOBS GRID */
 .jobs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px;
 }
 
 .job-card {
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: var(--radius-lg);
-  padding: 24px;
+  padding: 28px;
   cursor: pointer;
   transition: var(--transition);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.job-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0;
+  transition: var(--transition);
 }
 
 .job-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--border-light);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.job-card:hover::before {
+  opacity: 1;
 }
 
 .job-card-top {
@@ -266,15 +306,21 @@
 }
 
 .job-type-badge {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 12px;
   border-radius: 20px;
-  background: rgba(232, 149, 111, 0.1);
-  color: var(--accent);
-  border: 1px solid rgba(232, 149, 111, 0.2);
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--primary-light);
+  border: 1px solid rgba(99, 102, 241, 0.3);
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
+  transition: var(--transition);
+}
+
+.job-type-badge:hover {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.5);
 }
 
 .job-title { 
@@ -325,39 +371,41 @@
 
 .btn-apply {
   flex: 1;
-  padding: 11px;
-  background: var(--accent);
+  padding: 13px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
   font-family: inherit;
+  box-shadow: 0 6px 16px var(--primary-glow);
 }
 
 .btn-apply:hover { 
-  background: var(--accent-dark);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px var(--primary-glow);
 }
 
 .btn-view {
-  padding: 11px 14px;
-  border: 1px solid var(--border);
-  background: transparent;
+  padding: 13px 16px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  background: rgba(99, 102, 241, 0.05);
   color: var(--text-2);
   border-radius: var(--radius-sm);
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
   font-family: inherit;
 }
 
 .btn-view:hover { 
-  border-color: var(--accent);
-  color: var(--accent);
-  background: rgba(232, 149, 111, 0.05);
+  border-color: rgba(99, 102, 241, 0.4);
+  color: var(--primary-light);
+  background: rgba(99, 102, 241, 0.1);
 }
 
 /* PAGINATION */
@@ -369,14 +417,14 @@
 }
 
 .page-btn {
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
   background: var(--surface-2);
   color: var(--text-2);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
   font-family: inherit;
@@ -385,10 +433,17 @@
   justify-content: center;
 }
 
-.page-btn:hover, .page-btn.active {
-  background: var(--primary);
+.page-btn:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  color: var(--text);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.page-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
   border-color: var(--primary);
+  box-shadow: 0 6px 16px var(--primary-glow);
 }
 
 /* EMPTY STATE */
